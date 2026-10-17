@@ -15,7 +15,8 @@ class RestfulApi
     // test url :
     // public const REST_API_URL = 'http://166.88.19.190:8889/restful/' . self::REST_API_VERSION;
 
-    public static function sendRequest(string $endpoint, string $method, $data, string $apiKey, string $apiSecret = ''): mixed
+    /** @return mixed */
+    public static function sendRequest(string $endpoint, string $method, $data, string $apiKey, string $apiSecret = '')
     {
         $url = self::REST_API_URL . $endpoint;
         $method = strtoupper($method);

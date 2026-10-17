@@ -42,7 +42,7 @@ class ModuleUtil
     {
         $fullPhone = trim($fullPhone);
 
-        if (str_contains($fullPhone, '.')) {
+        if (strpos($fullPhone, '.') !== false) {
             if (preg_match('/^\+?\s*(\d+)\s*\.\s*([\d\s\-]+)\s*$/', $fullPhone, $matches)) {
                 return [
                     'phonecc'  => $matches[1],
@@ -75,7 +75,7 @@ class ModuleUtil
                 $json = json_decode(file_get_contents($countriesFile), true, 512, JSON_THROW_ON_ERROR);
                 return $json[$countryCode]['callingCode'] ?? '';
             }
-        } catch (Exception) {
+        } catch (Exception $e) {
             return '';
         }
 
@@ -157,7 +157,7 @@ class ModuleUtil
             if ($version) {
                 return (string) $version;
             }
-        } catch (Exception) {
+        } catch (Exception $e) {
             return 'unknown';
         }
 

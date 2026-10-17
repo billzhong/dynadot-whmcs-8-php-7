@@ -536,7 +536,8 @@ function dynadot_GetDomainSuggestions(array $params): ResultsList
     return new ResultsList();
 }
 
-function dynadot_GetRegistrarLock(array $params): array|string
+/** @return array|string */
+function dynadot_GetRegistrarLock(array $params)
 {
     $apiKey = $params['ApiKey'];
     $apiSecretKey = $params['ApiSecretKey'];
@@ -811,7 +812,8 @@ function dynadot_TransferSync(array $params): array
     return [];
 }
 
-function dynadot_GetTldPricing($params): array|ResultsList
+/** @return array|ResultsList */
+function dynadot_GetTldPricing($params)
 {
     $apiKey = $params['ApiKey'];
     $apiSecretKey = $params['ApiSecretKey'];
@@ -884,7 +886,7 @@ function dynadot_DnsManagement(array $params): array
             if (!empty($readResult['response']->data)) {
                 $data = $readResult['response']->data;
             }
-        } catch (Exception) {
+        } catch (Exception $e) {
         }
     }
 

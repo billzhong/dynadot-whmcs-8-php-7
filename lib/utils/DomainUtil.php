@@ -13,7 +13,7 @@ class DomainUtil
     private static function normalizeDomain(string $domainOrTld): string
     {
         $cleanString = strtolower(trim($domainOrTld));
-        if (!str_contains($cleanString, '.')) {
+        if (strpos($cleanString, '.') === false) {
             $cleanString = '.' . $cleanString;
         }
         return $cleanString;

@@ -18,7 +18,9 @@ class DynadotApiClient
         $this->apiSecretKey = $apiSecretKey;
     }
 
-    private function request(string $method, string $endpoint, array $request = []): array|object
+    /** @return array|object */
+
+    private function request(string $method, string $endpoint, array $request = [])
     {
         try {
             $response = RestfulApi::sendRequest($endpoint, $method, $request, $this->apiKey, $this->apiSecretKey);
@@ -35,7 +37,9 @@ class DynadotApiClient
         }
     }
 
-    private function handleRequest(string $method, string $endpoint, object $request): array|object
+    /** @return array|object */
+
+    private function handleRequest(string $method, string $endpoint, object $request)
     {
         try {
             $response = RestfulApi::sendRequest($endpoint, $method, $request, $this->apiKey, $this->apiSecretKey);
@@ -52,19 +56,25 @@ class DynadotApiClient
         }
     }
 
-    public function domainGetTldPrices(): array|object
+    /** @return array|object */
+
+    public function domainGetTldPrices()
     {
         $endpoint = '/tld/prices';
         return $this->request('GET', $endpoint, ['currency' => 'USD']);
     }
 
-    public function domainCheck(string $domainName): array|object
+    /** @return array|object */
+
+    public function domainCheck(string $domainName)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/check_availability';
         return $this->request('GET', $endpoint);
     }
 
-    public function domainRegister(string $domainName, array $domain, bool $premiumEnabled, string $coupon, int $whmcsOrderId): array|object
+    /** @return array|object */
+
+    public function domainRegister(string $domainName, array $domain, bool $premiumEnabled, string $coupon, int $whmcsOrderId)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/register';
         $requestBody = [
@@ -77,7 +87,9 @@ class DynadotApiClient
         return $this->request('POST', $endpoint, $requestBody);
     }
 
-    public function domainRenew(string $domainName, int $duration, int $currentYear, string $coupon, int $whmcsOrderId): array|object
+    /** @return array|object */
+
+    public function domainRenew(string $domainName, int $duration, int $currentYear, string $coupon, int $whmcsOrderId)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/renew';
         $requestBody = [
@@ -89,13 +101,17 @@ class DynadotApiClient
         return $this->request('POST', $endpoint, $requestBody);
     }
 
-    public function domainGraceDelete(string $domainName): array|object
+    /** @return array|object */
+
+    public function domainGraceDelete(string $domainName)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/grace_delete';
         return $this->request('DELETE', $endpoint);
     }
 
-    public function domainTagIn(string $domainName, array $domain, int $whmcsOrderId): array|object
+    /** @return array|object */
+
+    public function domainTagIn(string $domainName, array $domain, int $whmcsOrderId)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/tag_in';
         $requestBody = [
@@ -105,13 +121,17 @@ class DynadotApiClient
         return $this->request('POST', $endpoint, $requestBody);
     }
 
-    public function domainSaveTagOut(string $domainName, array $requestBody): array|object
+    /** @return array|object */
+
+    public function domainSaveTagOut(string $domainName, array $requestBody)
     {
         $endpoint = '/domains/' . urlencode(trim($domainName)) . '/tag_out';
         return $this->request('POST', $endpoint, $requestBody);
     }
 
-    public function domainTransferIn(string $domainName, array $domain, bool $premiumEnabled, string $coupon, int $whmcsOrderId): array|object
+    /** @return array|object */
+
+    public function domainTransferIn(string $domainName, array $domain, bool $premiumEnabled, string $coupon, int $whmcsOrderId)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/transfer_in';
         $requestBody = [
@@ -123,25 +143,33 @@ class DynadotApiClient
         return $this->request('POST', $endpoint, $requestBody);
     }
 
-    public function domainGetTagStatus(string $domainName): array|object
+    /** @return array|object */
+
+    public function domainGetTagStatus(string $domainName)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/tag_status';
         return $this->request('GET', $endpoint, ['tag_type' => 'tag_in']);
     }
 
-    public function domainGetTransferStatus(string $domainName): array|object
+    /** @return array|object */
+
+    public function domainGetTransferStatus(string $domainName)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/transfer_status';
         return $this->request('GET', $endpoint, ['transfer_type' => 'transfer_in']);
     }
 
-    public function domainGetNameservers(string $domainName): array|object
+    /** @return array|object */
+
+    public function domainGetNameservers(string $domainName)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/nameservers';
         return $this->request('GET', $endpoint);
     }
 
-    public function domainSaveNameservers(string $domainName, array $nameservers): array|object
+    /** @return array|object */
+
+    public function domainSaveNameservers(string $domainName, array $nameservers)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/nameservers';
         $requestBody = [
@@ -150,11 +178,15 @@ class DynadotApiClient
         return $this->request('PUT', $endpoint, $requestBody);
     }
 
-    public function domainGetContactDetails(string $domainName): array|object
+    /** @return array|object */
+
+    public function domainGetContactDetails(string $domainName)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/contacts';
         return $this->request('GET', $endpoint);
     }
+
+    /** @return array|object */
 
     public function domainSaveContactDetails(
         string $domainName,
@@ -162,7 +194,7 @@ class DynadotApiClient
         array $adminContact,
         array $technicalContact,
         array $billingContact
-    ): array|object {
+    ) {
         $endpoint = '/domains/' . urlencode($domainName) . '/contacts';
         $requestBody = [
             'whmcs_registrant_contact' => $registrantContact,
@@ -173,13 +205,17 @@ class DynadotApiClient
         return $this->request('PUT', $endpoint, $requestBody);
     }
 
-    public function domainGetDomainInfo(string $domainName): array|object
+    /** @return array|object */
+
+    public function domainGetDomainInfo(string $domainName)
     {
         $endpoint = '/domains/' . urlencode($domainName);
         return $this->request('GET', $endpoint);
     }
 
-    public function domainSaveLockStatus(string $domainName, string $lockStatus): array|object
+    /** @return array|object */
+
+    public function domainSaveLockStatus(string $domainName, string $lockStatus)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/lock_status';
         $requestBody = [
@@ -188,7 +224,9 @@ class DynadotApiClient
         return $this->request('PUT', $endpoint, $requestBody);
     }
 
-    public function domainSavePrivacy(string $domainName, bool $enable): array|object
+    /** @return array|object */
+
+    public function domainSavePrivacy(string $domainName, bool $enable)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/privacy';
         $requestBody = [
@@ -197,19 +235,25 @@ class DynadotApiClient
         return $this->request('PUT', $endpoint, $requestBody);
     }
 
-    public function domainGetTransferAuthCode(string $domainName): array|object
+    /** @return array|object */
+
+    public function domainGetTransferAuthCode(string $domainName)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/transfer_auth_code';
         return $this->request('GET', $endpoint);
     }
 
-    public function domainGetDnsRecords(string $domainName): array|object
+    /** @return array|object */
+
+    public function domainGetDnsRecords(string $domainName)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/records';
         return $this->request('GET', $endpoint);
     }
 
-    public function domainSaveDnsRecords(string $domainName, array $dnsMainList, array $dnsSubList, int $ttl): array|object
+    /** @return array|object */
+
+    public function domainSaveDnsRecords(string $domainName, array $dnsMainList, array $dnsSubList, int $ttl)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/records';
         $requestBody = [
@@ -221,13 +265,17 @@ class DynadotApiClient
         return $this->request('PUT', $endpoint, $requestBody);
     }
 
-    public function domainSaveEmailForwardingRecords(string $domainName, array $requestBody): array|object
+    /** @return array|object */
+
+    public function domainSaveEmailForwardingRecords(string $domainName, array $requestBody)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/email_forwarding';
         return $this->request('PUT', $endpoint, $requestBody);
     }
 
-    public function domainSetRegistrarContactExtension(string $domainName, $extension): array|object
+    /** @return array|object */
+
+    public function domainSetRegistrarContactExtension(string $domainName, $extension)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/registrar_contact_extension';
         $requestBody = new stdClass();
@@ -235,7 +283,9 @@ class DynadotApiClient
         return $this->handleRequest('PUT', $endpoint, $requestBody);
     }
 
-    public function domainSaveWhoisVerificationStatus(string $domainName, string $status): array|object
+    /** @return array|object */
+
+    public function domainSaveWhoisVerificationStatus(string $domainName, string $status)
     {
         $endpoint = '/domains/' . urlencode($domainName) . '/whois_verification_status';
         $requestBody = [
@@ -244,7 +294,9 @@ class DynadotApiClient
         return $this->request('PUT', $endpoint, $requestBody);
     }
 
-    public function nameserverRegister(string $serverName, string $ip): array|object
+    /** @return array|object */
+
+    public function nameserverRegister(string $serverName, string $ip)
     {
         $endpoint = '/nameservers/register';
         $requestBody = [
@@ -256,7 +308,9 @@ class DynadotApiClient
         return $this->request('POST', $endpoint, $requestBody);
     }
 
-    public function nameserverModifyIp(string $serverName, array $ipList): array|object
+    /** @return array|object */
+
+    public function nameserverModifyIp(string $serverName, array $ipList)
     {
         $endpoint = '/nameservers/' . urlencode($serverName) . '/set_ip';
         $requestBody = [
@@ -265,13 +319,17 @@ class DynadotApiClient
         return $this->request('PUT', $endpoint, $requestBody);
     }
 
-    public function nameserverDelete(string $serverName): array|object
+    /** @return array|object */
+
+    public function nameserverDelete(string $serverName)
     {
         $endpoint = '/nameservers/' . urlencode($serverName);
         return $this->request('DELETE', $endpoint);
     }
 
-    public function contactCreate(array $contact, int $whmcsClientId, int $whmcsContactId): array|object
+    /** @return array|object */
+
+    public function contactCreate(array $contact, int $whmcsClientId, int $whmcsContactId)
     {
         $endpoint = '/contacts/';
         $requestBody = [
@@ -282,7 +340,9 @@ class DynadotApiClient
         return $this->request('POST', $endpoint, $requestBody);
     }
 
-    public function contactUpdate(int $whmcsClientId, int $whmcsContactId, array $contact): array|object
+    /** @return array|object */
+
+    public function contactUpdate(int $whmcsClientId, int $whmcsContactId, array $contact)
     {
         $endpoint = '/clients/' . $whmcsClientId . '/contacts/' . $whmcsContactId . '/';
         $requestBody = [
@@ -291,7 +351,9 @@ class DynadotApiClient
         return $this->request('PUT', $endpoint, $requestBody);
     }
 
-    public function contactDelete(int $whmcsClientId, int $whmcsContactId): array|object
+    /** @return array|object */
+
+    public function contactDelete(int $whmcsClientId, int $whmcsContactId)
     {
         $endpoint = '/clients/' . $whmcsClientId . '/contacts/' . $whmcsContactId . '/';
         return $this->request('DELETE', $endpoint);
