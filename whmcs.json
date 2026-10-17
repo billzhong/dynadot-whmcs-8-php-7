@@ -1,0 +1,23 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-registrars",
+  "name": "dynadot",
+  "license": "proprietary",
+  "category": "domains",
+  "description": {
+    "name": "Dynadot",
+    "tagline": "Register domains & build your website with Dynadot!"
+  },
+  "logo": {
+    "filename": "logo.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.dynadot.com\/"
+  },
+  "authors": [
+    {
+      "name": "WHMCS",
+      "homepage": "https:\/\/www.whmcs.com\/"
+    }
+  ]
+}
